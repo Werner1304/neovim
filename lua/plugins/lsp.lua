@@ -6,10 +6,6 @@ return {
 		{ "j-hui/fidget.nvim", opts = {} },
 	},
 	config = function()
-		local caps = require("cmp_nvim_lsp").default_capabilities()
-
-		require("lspconfig").lua_ls.setup({ capabilities = caps })
-
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
@@ -22,6 +18,7 @@ return {
 			end
 		})
 
+		local caps = require('cmp_nvim_lsp').default_capabilities()
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			handlers = {
