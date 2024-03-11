@@ -49,3 +49,11 @@ end, { desc = "[S]plit [V]ertical" })
 vim.keymap.set("n", "<leader>sh", function()
 	vim.cmd("split")
 end, { desc = "[S]plit [H]orizontal" })
+
+vim.keymap.set("n", "<A-up>", function()
+	vim.cmd("m .-2")
+end, {})
+
+vim.keymap.set("n", "<A-down>", function()
+	vim.cmd("m .+1")
+end, {})
