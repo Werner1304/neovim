@@ -18,6 +18,10 @@ return {
 			end
 		})
 
+		local signature_opts = {
+			hint_prefix = "",
+		}
+
 		local caps = require('cmp_nvim_lsp').default_capabilities()
 		require("mason").setup()
 		require("mason-lspconfig").setup({
@@ -26,6 +30,10 @@ return {
 					local server = {}
 					server.capabilities = vim.tbl_deep_extend("force", {}, caps,
 						server.capabilities or {})
+
+					server.on_attach = function(client, buffer)
+						require("lsp_signature").on_attach(signature_opts, buffer)
+					end
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
