@@ -19,6 +19,9 @@ vim.opt.splitbelow = true
 vim.keymap.set("", "<Space>", "<Nop>")
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show [E]rror messages" })
 
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
