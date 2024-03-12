@@ -22,19 +22,30 @@ return {
 			hint_prefix = "",
 		}
 
+		local my_on_attach = function(client, buffer)
+			require("lsp_signature").on_attach(signature_opts, buffer)
+		end
+
 		local caps = require('cmp_nvim_lsp').default_capabilities()
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			handlers = {
 				function(server_name)
 					local server = {}
-					server.capabilities = vim.tbl_deep_extend("force", {}, caps,
-						server.capabilities or {})
-
-					server.on_attach = function(client, buffer)
-						require("lsp_signature").on_attach(signature_opts, buffer)
-					end
+					server.capabilities = caps
+					server.on_attach = my_on_attach
 					require("lspconfig")[server_name].setup(server)
+				end,
+				["gopls"] = function()
+					local server = {}
+					server.capabilities = caps
+					server.on_attach = my_on_attach
+					server.settings = {
+						gopls = {
+							semanticTokens = true,
+						},
+					}
+					require("lspconfig")["gopls"].setup(server)
 				end,
 			},
 		})
